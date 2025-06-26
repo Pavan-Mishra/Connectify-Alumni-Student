@@ -1,0 +1,503 @@
+<html></html>
+<head>
+    <title>ConnectiFy</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="analytics.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #e0e7ff;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+        }
+        .sidebar {
+            width: 80px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+        .sidebar .icon {
+            width: 40px;
+            height: 40px;
+            background-color: #f0f4ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, color 0.3s;
+            position: relative;
+        }
+        .sidebar .icon i {
+            color: #6b7280;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        .sidebar .icon:hover {
+            background-color: #d1d5db;
+            transform: scale(1.1);
+            color: #1e3a8a;
+        }
+        .sidebar .icon:hover i {
+            color: #1e3a8a;
+        }
+        .sidebar .icon.active {
+            background-color: #695CFE;
+        }
+        .sidebar .icon.active i {
+            color: #ffffff;
+        }
+        .sidebar .icon .tooltip {
+            visibility: hidden;
+            width: 120px;
+            background-color: #1e3a8a;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 110%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .sidebar .icon .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            transform: translateY(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent #1e3a8a transparent transparent;
+        }
+        .sidebar .icon:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(-50%) translateX(10px);
+        }
+        .sidebar .icon-robot:hover i {
+            transform: rotate(20deg);
+        }
+        .content {
+            flex-grow: 1;
+            padding: 0 40px 40px 40px;
+            transition: padding 0.3s;
+        }
+        .brand {
+            font-size: 28px;
+            font-weight: bold;
+            color: #695CFE;
+            margin-top: 20px;
+            display: inline-block;
+            text-align: center;
+        }
+        .brand span {
+            display: inline-block;
+            opacity: 0;
+            animation: connect 3s forwards;
+        }
+        .brand span:nth-child(1) {
+            animation-delay: 0.1s;
+            transform: translateX(-100vw);
+        }
+        .brand span:nth-child(2) {
+            animation-delay: 0.2s;
+            transform: translateY(-100vh);
+        }
+        .brand span:nth-child(3) {
+            animation-delay: 0.3s;
+            transform: translateX(100vw);
+        }
+        .brand span:nth-child(4) {
+            animation-delay: 0.4s;
+            transform: translateY(100vh);
+        }
+        .brand span:nth-child(5) {
+            animation-delay: 0.5s;
+            transform: translateX(-100vw);
+        }
+        .brand span:nth-child(6) {
+            animation-delay: 0.6s;
+            transform: translateY(-100vh);
+        }
+        .brand span:nth-child(7) {
+            animation-delay: 0.7s;
+            transform: translateX(100vw);
+        }
+        .brand span:nth-child(8) {
+            animation-delay: 0.8s;
+            transform: translateY(100vh);
+        }
+        .brand span:nth-child(9) {
+            animation-delay: 0.9s;
+            transform: translateX(-100vw);
+        }
+        .brand span:nth-child(10) {
+            animation-delay: 1s;
+            transform: translateY(-100vh);
+        }
+        @keyframes connect {
+            0% {
+                opacity: 0;
+                transform: translate(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0);
+            }
+        }
+        .brand:hover {
+            animation: hoverEffect 0.5s forwards;
+        }
+        @keyframes hoverEffect {
+            0% {
+                transform: scale(1);
+                color: #695CFE;
+            }
+            50% {
+                transform: scale(1.1);
+                color: #4b5563;
+            }
+            100% {
+                transform: scale(1);
+                color: #695CFE;
+            }
+        }
+        .content h1 {
+            font-size: 24px;
+            color: #4E4B66;
+            animation: slideIn 1s ease-in-out;
+        }
+        .recommendations {
+            margin-top: 20px;
+        }
+        .recommendation-item {
+            background-color: #FFFFFF;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .recommendation-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .recommendation-item h2 {
+            font-size: 18px;
+            color: #4E4B66;
+            margin: 0 0 5px 0;
+            transition: color 0.3s;
+        }
+        .recommendation-item p {
+            font-size: 14px;
+            color: #A0A3BD;
+            margin: 0;
+            transition: color 0.3s;
+        }
+        .recommendation-item a {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #6C63FF;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .recommendation-item a:hover {
+            color: #4E4B66;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        @keyframes tick {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+        .footer {
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            padding: 40px 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .contact-info {
+            font-size: 16px;
+            flex: 1;
+            min-width: 250px;
+        }
+        .contact-info p {
+            margin: 10px 0;
+        }
+        .contact-info strong {
+            font-size: 18px;
+            color: #333;
+        }
+        .social-icons {
+            font-size: 24px;
+            flex: 1;
+            text-align: right;
+            min-width: 250px;
+        }
+        .social-icons a {
+            color: #6c757d;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: transform 0.3s, color 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        .social-icons a::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: #007bff;
+            bottom: -5px;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease-in-out;
+        }
+        .social-icons a:hover {
+            transform: scale(1.1);
+            color: #007bff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .social-icons a:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .newsletter {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+        }
+        .newsletter p {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        .newsletter input[type="email"] {
+            padding: 10px;
+            width: 70%;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            margin-right: 10px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .newsletter input[type="email"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+        }
+        .newsletter button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .newsletter button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .contact-info p, .social-icons a, .newsletter {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="notification-bar"></div>
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="icon">
+                    <a href="home.html">
+                        <i class="fas fa-home"></i>
+                    </a>
+                </div>
+                <div class="icon">
+                    <a href="search.html">
+                        <i class="fas fa-search"></i>
+                    </a>
+                </div>
+                <div class="icon">
+                    <a href="analytics.html">
+                       <i class="fas fa-chart-bar"></i>
+                    </a>
+                </div>
+                <div class="icon">
+                    <a href="notification.html">
+                       <i class="fas fa-bell"></i>
+                    </a>
+                </div>
+                <div class="icon">
+                    <a href="timer.html">
+                        <i class="fas fa-clock"></i>
+                    </a>
+                </div>
+                <div class="icon active">
+                   <a href="like.html">
+                        <i class="fas fa-heart"></i>
+                    </a>    
+                </div>
+                <div class="icon icon-robot">
+                    <a href="/chatbot/index.html">
+                        <i class="fas fa-robot"></i>
+                        <span class="tooltip">Ask a question</span>
+                    </a>
+                </div>
+                <div class="icon">
+                    <a href="returnindex.html">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="content">
+                <div class="brand">
+                    <span>C</span><span>o</span><span>n</span><span>n</span><span>e</span><span>c</span><span>t</span><span>i</span><span>F</span><span>y</span>
+                </div>
+                <h1>Analytics Dashboard</h1>
+                <div class="recommendations">
+                    <div class="recommendation-item">
+                        <h2>Recommended Courses</h2>
+                        <p>Enhance your skills with these courses:</p>
+                        <ul>
+                            <li><a href="https://example.com/course1">Course 1: Advanced JavaScript</a></li>
+                            <li><a href="https://example.com/course2">Course 2: Data Structures and Algorithms</a></li>
+                            <li><a href="https://example.com/course3">Course 3: Machine Learning Basics</a></li>
+                        </ul>
+                    </div>
+                    <div class="recommendation-item">
+                        <h2>New Career Paths</h2>
+                        <p>Explore these emerging career paths:</p>
+                        <ul>
+                            <li><a href="https://example.com/career1">Career 1: Data Scientist</a></li>
+                            <li><a href="https://example.com/career2">Career 2: AI Engineer</a></li>
+                            <li><a href="https://example.com/career3">Career 3: Cybersecurity Specialist</a></li>
+                        </ul>
+                    </div>
+                    <div class="recommendation-item">
+                        <h2>Alumni Connections</h2>
+                        <p>Connect with alumni in your field:</p>
+                        <ul>
+                            <li><a href="https://example.com/alumni1">Alumni 1: John Doe - Software Engineer</a></li>
+                            <li><a href="https://example.com/alumni2">Alumni 2: Jane Smith - Data Analyst</a></li>
+                            <li><a href="https://example.com/alumni3">Alumni 3: Michael Brown - Product Manager</a></li>
+                        </ul>
+                    </div>
+                    <div class="recommendation-item">
+                        <h2>Internship Recommendations</h2>
+                        <p>Based on your skills, consider these internships:</p>
+                        <ul>
+                            <li><a href="https://example.com/internship1">Internship 1: Frontend Developer</a></li>
+                            <li><a href="https://example.com/internship2">Internship 2: Backend Developer</a></li>
+                            <li><a href="https://example.com/internship3">Internship 3: Data Science Intern</a></li>
+                        </ul>
+                    </div>
+                    <div class="recommendation-item">
+                        <h2>Upcoming Webinars</h2>
+                        <p>Join these webinars to learn more:</p>
+                        <ul>
+                            <li><a href="https://example.com/webinar1">Webinar 1: Introduction to Cloud Computing</a></li>
+                            <li><a href="https://example.com/webinar2">Webinar 2: Blockchain Technology</a></li>
+                            <li><a href="https://example.com/webinar3">Webinar 3: Advanced Python Programming</a></li>
+                        </ul>
+                    </div>
+                    <div class="recommendation-item">
+                        <h2>Networking Opportunities</h2>
+                        <p>Expand your network with these events:</p>
+                        <ul>
+                            <li><a href="https://example.com/networking1">Event 1: Tech Meetup</a></li>
+                            <li><a href="https://example.com/networking2">Event 2: Startup Pitch Night</a></li>
+                            <li><a href="https://example.com/networking3">Event 3: Industry Conference</a></li>
+                        </ul>
+                    </div>
+                    <div class="recommendation-item">
+                        <h2>Job Opportunities</h2>
+                        <p>Check out these job openings:</p>
+                        <ul>
+                            <li><a href="https://example.com/job1">Job 1: Full Stack Developer</a></li>
+                            <li><a href="https://example.com/job2">Job 2: Data Analyst</a></li>
+                            <li><a href="https://example.com/job3">Job 3: DevOps Engineer</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-content">
+            <div class="contact-info">
+                <p><strong>Contact Us:</strong></p>
+                <p>Email: info@ConnectiFy.com</p>
+                <p>Phone: (123) 456-7890</p>
+                <p>Address: 123 Main St, Pune, India</p>
+            </div>
+            <div class="newsletter">
+                <p><strong>Subscribe to our Newsletter:</strong></p>
+                <input type="email" placeholder="Enter your email">
+                <button>Subscribe</button>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
