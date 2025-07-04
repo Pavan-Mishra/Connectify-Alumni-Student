@@ -83,4 +83,4 @@ Made with ❤️ by **Pavan Mishra**
 
 ## 🌐 Live Demo
 
-👉 [Visit Project on GitHub Pages](https://pavan-mishra.github.io/connectify-Alumni-Student)
+👉 [Visit Project on GitHub Pages]([https://pavan-mishra.github.io/connectify-Alumni-Student](https://pavan-mishra.github.io/Connectify-Alumni-Student/))
